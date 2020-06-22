@@ -47,7 +47,7 @@ def generate_json(folder, device_json):
     ota_d['device_codename'] = device_json["device_codename"]
     ota_d['developer'] = device_json["maintainer"]
     ota_data.get ('response').append(ota_d)
-    with open(official_repo_path + "/a-only/" + device+'.json', 'w') as f:
+    with open(official_repo_path + "/ab/" + device+'-10.json', 'w') as f:
          json.dump(ota_data, f, indent=2)
 
 # Main
@@ -68,5 +68,5 @@ for dev, value in data.items():
 device_json_data = data[device]
 type(device_json_data)
 generate_json(folder + device.lower() +"/", device_json_data)
-shutil.copy2(folder + device.lower() + "/system/etc/Changelog.txt", official_repo_path + "/a-only/" + device+".changelog")
+shutil.copy2(folder + device.lower() + "/system/etc/Changelog.txt", official_repo_path + "/ab/" + device+"-10.changelog")
 
