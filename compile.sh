@@ -75,3 +75,7 @@ function uploadBuild(){
         gdrive out/target/product/twolip/syberia_tulip*.zip
     fi
 }
+installDeps
+syncSource
+enableCcache
+build
