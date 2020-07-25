@@ -48,7 +48,7 @@ function syncSource(){
 }
 
 function enableCcache(){
-    cat export USE_CCACHE=1 >> ~/.bashrc
+    echo export USE_CCACHE=1 >> ~/.bashrc
     source ~/.bashrc
     ccache -M 50G
 }
