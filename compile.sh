@@ -1,4 +1,5 @@
 ROM=$1
+dirty=$2
 
 function installDeps(){
     sudo apt-get update && sudo apt-get upgrade
@@ -10,6 +11,7 @@ function installDeps(){
     libxml2-utils unzip x11proto-core-dev xsltproc zip zlib1g-dev
     mkdir ~/bin && PATH=~/bin:$PATH && curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo && chmod a+x ~/bin/repo
     git config --global user.name "niteshkumar2000" && git config --global user.email "nitesh156200@gmail.com"
+    sudo apt update && sudo apt upgrade && sudo apt-get install git-core && git clone https://github.com/akhilnarang/scripts && cd scripts && bash setup/android_build_env.sh && cd
 }
 
 function syncSource(){
@@ -75,7 +77,14 @@ function uploadBuild(){
         gdrive out/target/product/twolip/syberia_tulip*.zip
     fi
 }
-installDeps
-syncSource
-enableCcache
-build
+
+if [ "$dirty" == "true" ]; then
+    build
+else
+    installDeps
+    syncSource
+    enableCcache
+    build
+fi
+
+uploadBuild
