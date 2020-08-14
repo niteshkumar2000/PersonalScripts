@@ -47,25 +47,25 @@ function useCcache(){
 	echo -e ${grn} "\n[*] Yumm! ccache enabled! [*]" ${txtrst}
 }
 
-if [ $SYNC == "true" ]; then
+if [ "$SYNC" = "true" ]; then
 	syncSource
 fi
 
-if [ $CCACHE == "true" ]; then
+if [ "$CCACHE" = "true" ]; then
 	useCcache
 fi
 
-if [ $CLEAN == "true" ]; then
+if [ "$CLEAN" = "true" ]; then
 	echo -e ${blu} "\n\n[*] Running clean job - full [*]" ${txtrst}
 	make clean && rm -rf out
 	echo -e ${grn}"\n[*] Clean job completed! [*]" ${txtrst}
 
 fi
 
-if [ $BUILD == "true" ]; then
+if [ "$BUILD" = "true" ]; then
 	build
 fi
 
-if [ $UPLOAD = "true" ]; then
+if [ "$UPLOAD" = "true" ]; then
 	uploadBuild
 fi
