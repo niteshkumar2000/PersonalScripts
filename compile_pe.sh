@@ -30,7 +30,7 @@ function build(){
 	echo -e ${cya} "\n\n[*] Starting the build... [*]" ${txtrst}
     	. build/envsetup.sh
     	lunch aosp_twolip-userdebug
-    	mka bacon -j$(nproc --all)
+    	mka bacon -j1
 }
 
 function uploadBuild(){
