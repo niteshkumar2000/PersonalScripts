@@ -22,6 +22,7 @@ if __name__ == "__main__":
         repo_list = ''.join(repo.split('/')[1:]).split('_')
         print('Entering {} directory!'.format(repo))
         os.system('cd ' + '/'.join(repo_list))
+        commands.reverse()
         for command in commands:
             print('Picking the change!')
             os.system(command)
