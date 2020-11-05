@@ -19,6 +19,8 @@ if __name__ == "__main__":
         cherrypicks[change['project']].append(("git fetch \"http://freakyos.xyz/{}\" refs/changes/{}/{}/{} && git cherry-pick FETCH_HEAD").format(
             change['project'], str(change['_number'])[1:], change['_number'], len(response['revisions'])))
     for repo, commands in cherrypicks.items():
+        if repo == 'FreakyOS/build':
+            repo = 'FreakyOS/build_make'
         repo_list = ''.join(repo.split('/')[1:]).split('_')
         print('Entering {} directory!'.format(repo))
         os.system('cd ' + '/'.join(repo_list))
@@ -27,4 +29,4 @@ if __name__ == "__main__":
             print('Picking the change!')
             os.system(command)
         print('Leaving the directory and return to home page!')
-        os.system('cd  '+ '../'*len(repo_list))
+        os.system('cd ' + '../'*len(repo_list))
