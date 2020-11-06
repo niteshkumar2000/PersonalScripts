@@ -1,5 +1,6 @@
 import requests
 from datetime import datetime
+import sys
 
 post_template = """
 FreakyOS <b>{}'s</b> Final Android 10 Release
@@ -36,11 +37,10 @@ def getDeviceDetails(codename):
     return details
 
 
-def preparePost():
-    response = requests.get("https://raw.githubusercontent.com/FreakyOS/ota_config/still_alive/tulip/tulip.json")
+def preparePost(codename):
+    response = requests.get("https://raw.githubusercontent.com/FreakyOS/ota_config/still_alive/{}/{}.json".format(codename, codename))
     data = response.json()['response'][0]
     date = str(datetime.fromtimestamp(data["datetime"])).split(' ')[0]
-    codename = data["filename"].split('-')[1]
     device_details = getDeviceDetails(codename)
     devicename = device_details[0]
     maintainer = device_details[1]
@@ -52,4 +52,8 @@ def sendMessage(message):
     return r
 
 if __name__ == "__main__":
-    print(sendMessage(preparePost()))
+    if len(sys.argv) != 2:
+        print("Please send device name as command line argument")
+        exit
+    else:
+        print(sendMessage(preparePost(sys.argv[1])))
