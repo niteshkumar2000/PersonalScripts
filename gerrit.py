@@ -2,11 +2,20 @@ from pygerrit2 import GerritRestAPI, Anonymous
 import requests, json
 import os
 
-if __name__ == "__main__":
+def getChanges():
     url = 'http://freakyos.xyz'
     auth = Anonymous()
     rest = GerritRestAPI(url=url, auth=auth)
-    changes = rest.get("/changes/?q=status:open")
+    return rest.get("/changes/?q=status:open")
+
+def getCommitMessage(changes, number):
+    for change in changes:
+        if change['_number'] == number:
+            return change['subject']
+    return None
+
+if __name__ == "__main__":
+    changes = getChanges()
     cherrypicks = {}
     for change in changes:
         response = requests.get("http://freakyos.xyz/changes/FreakyOS%2F{}~{}/detail?O=916314".format(change['project'].split('/')[-1], change['_number']))
@@ -26,7 +35,12 @@ if __name__ == "__main__":
         os.system('cd ' + '/'.join(repo_list))
         commands.reverse()
         for command in commands:
-            print('Picking the change!')
-            os.system(command)
+            number = int(command.split('/')[7])
+            ans = input(f'Do you want to pick the change - {getCommitMessage(changes, number)}? (Y/N)')
+            if ans.lower() == 'y':
+                print('Picking the change!')
+                os.system(command)
+            else:
+                print('Moving on to next change!')
         print('Leaving the directory and return to home page!')
         os.system('cd ' + '../'*len(repo_list))

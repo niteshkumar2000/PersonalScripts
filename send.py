@@ -17,7 +17,7 @@ FreakyOS <b>{}'s</b> Final Android 10 Release
 
 ✅ Downloads: <a href="{}"> Here </a>
 
-ℹ️ Info: <a href = "https://freakyos.me/"> FreakyOS Homepage </a>  || <a href="https://t.me/freakyos"> TownHall </a> || <a href={}> XDA </a> 
+ℹ️ Info: <a href = "https://freakyos.me/"> FreakyOS Homepage </a>  || <a href="https://t.me/freakyos"> TownHall </a> || <a href="{}"> XDA </a> 
 
 ℹ️ Note: 
 - Ignore Gapps Warning while flashing Gapps.
@@ -41,7 +41,11 @@ def preparePost(codename):
     data = response.json()['response'][0]
     date = str(datetime.fromtimestamp(data['datetime'])).split(' ')[0]
     device_details = getDeviceDetails(codename)
-    text = post_template.format(codename, data['filename'], date , device_details['name'], device_details['maintainer'], data['url'], "")
+    try:
+        print(device_details['xda_link'])
+        text = post_template.format(codename, data['filename'], date, device_details['name'], device_details['maintainer'], data['url'], device_details['xda_link'])
+    except:
+        text = post_template.format(codename, data['filename'], date, device_details['name'], device_details['maintainer'], data['url'], "")
     return text
 
 def sendMessage(message):
