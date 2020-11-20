@@ -23,6 +23,11 @@ function syncSource(){
 	git clone --depth=1 https://github.com/xiaomi-sdm660/android_vendor_xiaomi_tulip -b eleven vendor/xiaomi/tulip
 	git clone --depth=1 https://github.com/Divyanshu-Modi/Atom-X-Kernel -b kernel.lnx.4.4.r38-rel kernel/xiaomi/sdm660
         rm -rf vendor/aosp/packages/overlays/NoCutoutOverlay
+        cd device/xiaomi/tulip
+        git remote add 1 https://github.com/niteshkumar2000/android_device_xiaomi_sdm660-common
+        git fetch 1
+        git cherry-pick bdcb87e5d30b8b2b4a4d9bf221dbde2569171b65
+        cd ../../../
 	echo -e ${grn} "\n[*] Syncing sources completed! [*]" ${txtrst}
 }
 
