@@ -16,27 +16,21 @@ function syncSource(){
 	git config --global user.name "niteshkumar2000" && git config --global user.email "nitesh156200@gmail.com"
 	echo -e ${blu} "\n[*] Syncing sources... This will take a while [*]" ${txtrst}
 	repo init --depth=1 -u https://github.com/PixelExtended/manifest -b r
-        repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+	repo sync -c -q --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
 	git clone --depth=1 https://github.com/xiaomi-sdm660/android_device_xiaomi_tulip -b eleven device/xiaomi/tulip
 	git clone --depth=1 https://github.com/xiaomi-sdm660/android_device_xiaomi_sdm660-common -b eleven device/xiaomi/sdm660-common
 	git clone --depth=1 https://github.com/xiaomi-sdm660/android_vendor_xiaomi_sdm660-common -b eleven vendor/xiaomi/sdm660-common
 	git clone --depth=1 https://github.com/xiaomi-sdm660/android_vendor_xiaomi_tulip -b eleven vendor/xiaomi/tulip
 	git clone --depth=1 https://github.com/Divyanshu-Modi/Atom-X-Kernel -b kernel.lnx.4.4.r38-rel kernel/xiaomi/sdm660
         rm -rf vendor/aosp/packages/overlays/NoCutoutOverlay
-        cd device/xiaomi/tulip
-        git remote add 1 https://github.com/niteshkumar2000/android_device_xiaomi_sdm660-common
-        git fetch 1
-        git cherry-pick bdcb87e5d30b8b2b4a4d9bf221dbde2569171b65
-        cd ../../../
 	echo -e ${grn} "\n[*] Syncing sources completed! [*]" ${txtrst}
 }
 
 function build(){
-	export PEX_BUILD_TYPE:=OFFICIAL
+	export PEX_BUILD_TYPE=OFFICIAL
 	echo -e ${cya} "\n\n[*] Starting the build... [*]" ${txtrst}
-    	. build/envsetup.sh
-    	lunch aosp_tulip-userdebug
-    	mka bacon -j$(nproc --all)
+    	. b*/e*
+    	brunch tulip
 }
 
 function uploadBuild(){
@@ -63,6 +57,7 @@ fi
 
 if [ "$CLEAN" = "true" ]; then
 	echo -e ${blu} "\n\n[*] Running clean job - full [*]" ${txtrst}
+	. b*/e*
 	make clean && rm -rf out
 	echo -e ${grn}"\n[*] Clean job completed! [*]" ${txtrst}
 
