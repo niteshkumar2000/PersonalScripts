@@ -17,16 +17,17 @@ function syncSource(){
 	echo -e ${blu} "\n[*] Syncing sources... This will take a while [*]" ${txtrst}
 	repo init --depth=1 -u https://github.com/PixelExtended/manifest -b ten-plus
         repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
-        git clone --depth=1 https://github.com/niteshkumar2000/android_device_xiaomi_sdm660-common -b ten device/xiaomi/sdm660-common
-        git clone --depth=1 https://github.com/niteshkumar2000/android_device_xiaomi_twolip -b ten device/xiaomi/twolip
-        git clone --depth=1 https://github.com/xiaomi-sdm660/android_kernel_xiaomi_sdm660.git -b master kernel/xiaomi/sdm660
-        git clone --depth=1 https://github.com/niteshkumar2000/proprietary_vendor_xiaomi.git -b ten vendor/xiaomi
-        git clone --depth=1 https://github.com/niteshkumar2000/vendor_MiuiCamera.git vendor/MiuiCamera
+	git clone https://github.com/xiaomi-sdm660/android_device_xiaomi_tulip -b eleven device/xiaomi/tulip
+	git clone https://github.com/xiaomi-sdm660/android_device_xiaomi_sdm660-common -b eleven device/xiaomi/sdm660-common
+	git clone https://github.com/xiaomi-sdm660/android_vendor_xiaomi_sdm660-common -b eleven vendor/xiaomi/sdm660-common
+	git clone https://github.com/xiaomi-sdm660/android_vendor_xiaomi_tulip -b eleven vendor/xiaomi/tulip
+	git clone --depth=1 https://github.com/Divyanshu-Modi/Atom-X-Kernel -b kernel.lnx.4.4.r38-rel kernel/xiaomi/sdm660
         rm -rf vendor/aosp/packages/overlays/NoCutoutOverlay
 	echo -e ${grn} "\n[*] Syncing sources completed! [*]" ${txtrst}
 }
 
 function build(){
+	export PEX_BUILD_TYPE:=OFFICIAL
 	echo -e ${cya} "\n\n[*] Starting the build... [*]" ${txtrst}
     	. build/envsetup.sh
     	lunch aosp_twolip-userdebug
