@@ -30,7 +30,7 @@ function build(){
 	export PEX_BUILD_TYPE:=OFFICIAL
 	echo -e ${cya} "\n\n[*] Starting the build... [*]" ${txtrst}
     	. build/envsetup.sh
-    	lunch aosp_twolip-userdebug
+    	lunch aosp_tulip-userdebug
     	mka bacon -j1
 }
 
