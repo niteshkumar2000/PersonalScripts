@@ -15,7 +15,7 @@ txtrst=$(tput sgr0)             #  Reset
 function syncSource(){
 	git config --global user.name "niteshkumar2000" && git config --global user.email "nitesh156200@gmail.com"
 	echo -e ${blu} "\n[*] Syncing sources... This will take a while [*]" ${txtrst}
-	repo init --depth=1 -u https://github.com/PixelExtended/manifest -b ten-plus
+	repo init -u https://github.com/PixelExtended/manifest -b r
         repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 	git clone https://github.com/xiaomi-sdm660/android_device_xiaomi_tulip -b eleven device/xiaomi/tulip
 	git clone https://github.com/xiaomi-sdm660/android_device_xiaomi_sdm660-common -b eleven device/xiaomi/sdm660-common
@@ -31,7 +31,7 @@ function build(){
 	echo -e ${cya} "\n\n[*] Starting the build... [*]" ${txtrst}
     	. build/envsetup.sh
     	lunch aosp_tulip-userdebug
-    	mka bacon -j1
+    	mka bacon -j$(nproc --all)
 }
 
 function uploadBuild(){
